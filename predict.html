@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>predict</title>
+</head>
+<body style="background-color: #88AB8E">
+<div style="display: flex; align-items: center; justify-content: center; height: 95vh; gap: 20px;">
+
+
+
+
+        <div style="background-color: rgb(252, 252, 252);
+        padding: 3rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 20px;">
+        <form method="post" action="/pred_salary" style="min-width: 30vw; max-width: 30vw;" onsubmit="send_data()">
+          <h1 style="text-align: center; color:#88AB8E;">Salary Predictor</h1>
+          <br/>
+        <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:20px">
+            <label>Select your gender:</label>
+            <select style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" id="gender" name="gender" class="forminput">
+              <option value="F">Female</option>
+              <option value="M">Male</option>
+            </select>
+            <p style="padding: 0px; margin:0px">Age</p>
+            <input style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" type="number" id="Age" name="age" required placeholder="Age">
+            <label>Select your Designation:</label>
+            <select style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" id="des" name="des" class="forminput">
+              <option value="Analyst">Analyst</option>
+              <option value="Associate">Associate</option>
+              <option value="Senior Analyst">Senior Analyst</option>
+              <option value="Senior Manager">Senior Manager</option>
+              <option value="Manager">Manager</option>
+              <option value="Director">Director</option>
+            </select>
+            <label>Select your Unit:</label>
+            <select style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" id="unit" name="unit" class="forminput">
+              <option value="Finance">Finance</option>
+              <option value="Web">Web</option>
+              <option value="IT">IT</option>
+              <option value="Operations">Operations</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Management">Management</option>
+            </select>
+            <p style="padding: 0px; margin:0px">Leaves used</p>
+            <input style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" type="number" id="lu" name="lu" required placeholder="Leaves used" min="0" max="30" step="5">
+            <p style="padding: 0px; margin:0px">Leaves remaining</p>
+            <input style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" type="number" id="lr" name="lr" required placeholder="Leaves remaining" min="0" max="30">
+            <p style="padding: 0px; margin:0px">Ratings</p>
+            <input style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" type="number" id="rat" name="rat" required placeholder="Ratings" pattern="[1-5]">
+             <p style="padding: 0px; margin:0px">Past experience</p>
+            <input style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" type="number" id="pe" name="pe" required placeholder="experience">
+             <p style="padding: 0px; margin:0px">Current experience</p>
+            <input style="border: 1px grey solid; border-radius: 10px; padding: 5px 10px 5px 10px;" type="number" id="ce" name="ce" required placeholder="experience">
+
+        </div>
+        <div style="display:flex;margin-top: 1.5rem; justify-content: center;">
+            <button type="submit"  style="background-color: #88AB8E; color: black; border: 1px rgb(178, 173, 173) solid; padding: 5px 20px 5px 20px; border-radius:10px; text-decoration: none">Submit</u></button>
+          </div>
+        </form>
+            <br>
+            <div style = 'text-align: center; color:#88AB8E;'>
+                <h3><span Id="prediction"></span></h3>
+            </div>
+      </div>
+    </div>
+<script>
+    function send_data() {
+        var fd = new FormData(document.querySelector('form'));
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/pred_salary', true);
+        document.getElementById("prediction").innerHTML = "Wait predicting salary!....";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                document.getElementById('prediction').innerHTML = "Prediction: Rs " + xhr.responseText;
+            }
+        };
+        xhr.onload = function () { };
+        xhr.send(fd);
+    }
+
+    document.querySelector('button').addEventListener("click", function (event) {
+        event.preventDefault();
+        send_data();
+    });
+</script>
+
+</body>
+</html>
